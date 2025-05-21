@@ -1,6 +1,6 @@
 
 export default function Dashboard() {
     return (
-        <h2 className='text-center text-2xl'>welcome dashboard</h2>
+        <h2 className='text-center text-2xl text-blue-700'>welcome dashboard</h2>
     )
 }
