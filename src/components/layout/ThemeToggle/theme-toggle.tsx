@@ -14,10 +14,10 @@ export function ModeToggle() {
       const newMode = resolvedTheme === 'dark' ? 'light' : 'dark';
       const root = document.documentElement;
 
-      // if (!document.startViewTransition) {
-      //   setTheme(newMode);
-      //   return;
-      // }
+      if (!document.startViewTransition) {
+        setTheme(newMode);
+        return;
+      }
 
       // Set coordinates from the click event
       if (e) {
@@ -25,9 +25,9 @@ export function ModeToggle() {
         root.style.setProperty('--y', `${e.clientY}px`);
       }
 
-      // document.startViewTransition(() => {
-      //   setTheme(newMode);
-      // });
+      document.startViewTransition(() => {
+        setTheme(newMode);
+      });
     },
     [resolvedTheme, setTheme]
   );

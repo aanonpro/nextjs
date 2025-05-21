@@ -63,6 +63,13 @@ export default function AppSidebar() {
   const pathname = usePathname();
   const { isOpen } = useMediaQuery();
 //   const { user } = useUser();
+const user={
+  imageUrl: "/RTR-LOGO.png",
+  fullName: "Itcambo",
+  emailAddresses: [
+      {emailAddress: "it.cambo@gmail.com"}
+  ]
+}
   const router = useRouter();
   const handleSwitchTenant = (_tenantId: string) => {
     // Tenant switching functionality would be implemented here
@@ -160,15 +167,15 @@ export default function AppSidebar() {
                     />
                   )} */}
                   <UserAvatarProfile
-                      className='h-8 w-8 rounded-lg'
-                      showInfo
-                      user={{
-                        imageUrl: "/RTR-LOGO.png",
-                        fullName: "Chhaya",
-                        emailAddresses: [
-                            {emailAddress: "it.chhaya@gmail.com"}
-                        ]
-                      }}
+                      className='h-8 w-8 rounded-lg' user={user}
+                      // showInfo
+                      // user={{
+                      //   imageUrl: "/RTR-LOGO.png",
+                      //   fullName: "Chhaya",
+                      //   emailAddresses: [
+                      //       {emailAddress: "it.chhaya@gmail.com"}
+                      //   ]
+                      // }}
                     />
                     
                   <IconChevronsDown className='ml-auto size-4' />
@@ -191,14 +198,15 @@ export default function AppSidebar() {
                     )} */}
                     <UserAvatarProfile
                       className='h-8 w-8 rounded-lg'
-                      showInfo
-                      user={{
-                        imageUrl: "/RTR-LOGO.png",
-                        fullName: "Chhaya",
-                        emailAddresses: [
-                            {emailAddress: "it.chhaya@gmail.com"}
-                        ]
-                      }}
+                      user={user}
+                      // showInfo
+                      // user={{
+                      //   imageUrl: "/RTR-LOGO.png",
+                      //   fullName: "Chhaya",
+                      //   emailAddresses: [
+                      //       {emailAddress: "it.chhaya@gmail.com"}
+                      //   ]
+                      // }}
                     />
                   </div>
                 </DropdownMenuLabel>
