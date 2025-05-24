@@ -1,14 +1,20 @@
+"use client"
 import { GalleryVerticalEnd } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useRouter } from "next/navigation"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+    const router = useRouter();
+    function login(){
+        router.push("/dashboard")
+    }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <form>
@@ -41,11 +47,23 @@ export function LoginForm({
                 required
               />
             </div>
-            <Button type="submit" className="w-full">
+            <div className="grid gap-2">
+                <div className="flex items-center">
+                  <Label htmlFor="password">Password</Label>
+                  <a
+                    href="#"
+                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
+                <Input id="password" type="password" placeholder="password" required />
+              </div>
+            <Button onClick={login} type="button" className="w-full">
               Login
             </Button>
           </div>
-          <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+          {/* <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
             <span className="relative z-10 bg-background px-2 text-muted-foreground">
               Or
             </span>
@@ -69,7 +87,7 @@ export function LoginForm({
               </svg>
               Continue with Google
             </Button>
-          </div>
+          </div> */}
         </div>
       </form>
       <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 hover:[&_a]:text-primary  ">
