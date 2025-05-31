@@ -7,6 +7,7 @@ import ThemeProvider from "@/components/layout/ThemeToggle/theme-provider";
 import { cn } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { ActiveThemeProvider } from "@/components/active-theme";
+import { Toaster } from "sonner";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -69,6 +70,7 @@ export default async function RootLayout({
           {/* {children} */}
           <ActiveThemeProvider initialTheme={activeThemeValue}>
           {children}
+          <Toaster/>
           </ActiveThemeProvider>
         </ThemeProvider>
       </body>

@@ -4,12 +4,13 @@ import { GalleryVerticalEnd } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form"
+import { authUser } from "@/constants/data"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
     username: z.string().min(2, {
@@ -31,7 +32,7 @@ export function LoginForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-    // const router = useRouter();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -51,8 +52,15 @@ export function LoginForm({
 
     const username = watch("username")
 
+    const [authMessage,setAuthMessage] = useState<string>()
+
     function onSubmit(data: z.infer<typeof formSchema>) {
-        console.log("data", data)
+        const {username,password} = authUser
+        if(username === data.username && password ===data.password){
+            router.replace("/dashboard/overview")
+        }else{
+            setAuthMessage("Bad Credential")
+        }
     }
 
     return (
@@ -72,6 +80,7 @@ export function LoginForm({
                                 <span className="sr-only">Acme Inc.</span>
                             </a>
                             <h1 className="text-xl font-bold">Welcome {username} to Acme Inc.</h1>
+                            <p className="text-red-500">{authMessage}</p>
                             <div className="text-center text-sm">
                                 Don&apos;t have an account?{" "}
                                 <a href="#" className="underline underline-offset-4">
