@@ -1,3 +1,4 @@
+"use client"
 import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
 
 import {
@@ -23,6 +24,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface MenuItem {
   title: string;
@@ -46,6 +48,13 @@ interface Navbar1Props {
       url: string;
     };
   };
+  dashboard?: {
+    title: string;
+    url: string;
+  }
+}
+type IsAuthType = {
+  isAuthenticated: boolean
 }
 
 export const Navbar = ({
@@ -105,9 +114,24 @@ export const Navbar = ({
     },
   ],
   auth = {
-    login: { title: "Login", url: "/login" },
+    login: { title: "Login", url: "/oauth2/authorization/nextjs" },
   },
+  dashboard = {
+    title: "Dashboard", url: "/dashboard"
+  }
 }: Navbar1Props) => {
+  const [authType, setAuthType] = useState<IsAuthType>()
+
+
+  useEffect(() => {
+    fetch("/api/v1/auth/is-authenticated")
+      .then(res => res.json())
+      .then(json => {
+        console.log("Json:", json)
+        setAuthType(json)
+      })
+      .catch(error => console.log("Error:", error))
+  }, [])
   return (
     <section className="py-4">
       <div className="container m-auto">
@@ -130,9 +154,19 @@ export const Navbar = ({
             </div>
           </div>
           <div className="flex gap-2">
-            <Button asChild variant="outline" size="sm">
+          {
+              authType && !authType.isAuthenticated ?
+                <Button asChild variant="outline" size="sm">
+                  <Link href={auth.login.url}>{auth.login.title}</Link>
+                </Button>
+                :
+                <Button asChild variant="outline" size="sm">
+                  <Link href={dashboard.url}>{dashboard.title}</Link>
+                </Button>
+            }
+            {/* <Button asChild variant="outline" size="sm">
               <Link href={auth.login.url}>{auth.login.title}</Link>
-            </Button>
+            </Button> */}
           </div>
         </nav>
 

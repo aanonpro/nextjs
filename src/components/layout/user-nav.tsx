@@ -66,7 +66,11 @@ export function UserNav() {
                     <DropdownMenuItem>New Team</DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className='text-amber-800 focus:text-amber-800'>
+                <DropdownMenuItem 
+                 onClick={() => {
+                    window.location.href = "/logout"
+                  }}
+                className='text-amber-800 focus:text-amber-800'>
                     {/* <SignOutButton redirectUrl='/auth/sign-in' /> */}
                     logout
                 </DropdownMenuItem>
