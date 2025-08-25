@@ -25,6 +25,8 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { increment } from "@/features/counter/counterSlice";
 
 interface MenuItem {
   title: string;
@@ -122,6 +124,8 @@ export const Navbar = ({
 }: Navbar1Props) => {
   const [authType, setAuthType] = useState<IsAuthType>()
 
+  const count = useAppSelector(state =>state.counter.value)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     fetch("/api/v1/auth/is-authenticated")
@@ -153,8 +157,20 @@ export const Navbar = ({
               </NavigationMenu>
             </div>
           </div>
+
           <div className="flex gap-2">
-          {
+            <h2 className="text-2xl font-black text-red-500">
+              {count}
+            </h2>
+            <Button onClick={()=>{
+              dispatch(increment())
+            }} variant="outline" size="sm">
+              Add 1
+            </Button>
+          </div>
+
+          <div className="flex gap-2">
+            {
               authType && !authType.isAuthenticated ?
                 <Button asChild variant="outline" size="sm">
                   <Link href={auth.login.url}>{auth.login.title}</Link>
@@ -233,16 +249,16 @@ const renderMenuItem = (item: MenuItem) => {
 
   return (
     <NavigationMenuItem key={item.title}>
-      
+
       <Link
-      href={item.url}
+        href={item.url}
         className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
       >
-       {item.title}
+        {item.title}
       </Link>
     </NavigationMenuItem>
 
-    
+
   );
 };
 

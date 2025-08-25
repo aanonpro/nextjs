@@ -1,10 +1,14 @@
+"use client"
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { ChevronRight, CirclePlay } from 'lucide-react'
 import Image from 'next/image'
+import { useAppDispatch } from '@/lib/hooks'
+import { decrement, increment } from '@/features/counter/counterSlice'
 
 export default function HeroSection() {
+    const dispatch = useAppDispatch()
     return (
         <>
             <main className="overflow-hidden">
@@ -18,24 +22,31 @@ export default function HeroSection() {
 
                                     <div className="flex items-center gap-3">
                                         <Button
-                                            asChild
+                                            onClick={()=>{
+                                                dispatch(increment())
+                                            }}
+                                            key={1}
                                             size="lg"
                                             className="pr-4.5">
-                                            <Link href="#link">
-                                                <span className="text-nowrap">Get Started</span>
+                                            <div>
+                                            <span className="text-nowrap">Get Started</span>
                                                 <ChevronRight className="opacity-50" />
-                                            </Link>
+                                            </div>
                                         </Button>
                                         <Button
+                                        onClick={()=>{
+                                            dispatch(decrement())
+                                        }}
                                             key={2}
                                             asChild
                                             size="lg"
                                             variant="outline"
                                             className="pl-5">
-                                            <Link href="#link">
+                                                <div>
                                                 <CirclePlay className="fill-primary/25 stroke-primary" />
                                                 <span className="text-nowrap">Watch video</span>
-                                            </Link>
+                                                </div>
+                                            
                                         </Button>
                                     </div>
                                 </div>

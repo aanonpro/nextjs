@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { ActiveThemeProvider } from "@/components/active-theme";
 import { Toaster } from "sonner";
+import StoreProvider from "./StoreProvider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -60,19 +61,22 @@ export default async function RootLayout({
       // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/* {children} */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-          enableColorScheme
-        >
-          {/* {children} */}
-          <ActiveThemeProvider initialTheme={activeThemeValue}>
-          {children}
-          <Toaster/>
-          </ActiveThemeProvider>
-        </ThemeProvider>
+        {/* add StoreProvider for use redux */}
+        <StoreProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            enableColorScheme
+          >
+            {/* {children} */}
+            <ActiveThemeProvider initialTheme={activeThemeValue}>
+              {children}
+              <Toaster />
+            </ActiveThemeProvider>
+          </ThemeProvider>
+        </StoreProvider>
       </body>
     </html>
   );
