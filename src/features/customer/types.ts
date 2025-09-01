@@ -2,5 +2,14 @@ export type CustomerResponse = {
     customerNumber: string,
     firstName: string,
     lastName: string,
-    email: string
+    email: string,
+    segment: string
+}
+
+export type CreateCustomerRequest = {
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    dateOfBirth: Date
 }

@@ -16,3 +16,10 @@ usePathname:
       </NavigationMenuLink>
       </Link>
     </NavigationMenuItem>
+
+
+
+
+
+    ****** reducer in nextjs
+    create central api -> call central api (customerApi) -> register to store

@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const gatewayApi = createApi({
 
@@ -6,6 +6,7 @@ export const gatewayApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: process.env.GATEWAY_BASE_URL
     }),
-    endpoints: () =>({})
-    
+    tagTypes: ["CustomerResponse"],
+    endpoints: () => ({})
+
 });

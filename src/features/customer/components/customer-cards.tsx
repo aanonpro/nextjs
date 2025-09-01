@@ -34,7 +34,7 @@ export function CustomerCards() {
                             <CardAction>
                                 <Badge variant="outline">
                                     <IconTrendingUp />
-                                    segment
+                                    {customer.segment}
                                 </Badge>
                             </CardAction>
                         </CardHeader>
