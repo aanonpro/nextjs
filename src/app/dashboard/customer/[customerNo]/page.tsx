@@ -7,13 +7,21 @@ import { cn } from "@/lib/utils";
 import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
 
-export default function Page() {
+type CustomerPageProps = {
+    params: {
+        customerNo: string
+    }
+}
+
+export default async function Page({params}: CustomerPageProps) {
+    const { customerNo } = await params
+
     return (
         <PageContainer scrollable={false}>
             <div className='flex flex-1 flex-col space-y-4'>
                 <div className='flex items-start justify-between'>
                     <Heading
-                        title='Customer Create'
+                        title={'Create new customer: ' + customerNo}
                         description='All customers in report system'
                         sub_title="admin create customer"
                     />
@@ -25,7 +33,7 @@ export default function Page() {
                     </Link>
                 </div>
                 <Separator />
-                <CustomerCreateForm/>
+                <CustomerCreateForm data={customerNo}/>
                
             </div>
         </PageContainer>

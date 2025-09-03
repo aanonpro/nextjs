@@ -12,6 +12,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { useGetCustomersQuery } from "../customerApi"
+import CustomerActions from "./customer-actions"
 
 export function CustomerCards() {
 
@@ -36,6 +37,7 @@ export function CustomerCards() {
                                     <IconTrendingUp />
                                     {customer.segment}
                                 </Badge>
+                                <CustomerActions data={customer.customerNumber}/>
                             </CardAction>
                         </CardHeader>
                         <CardFooter className="flex-col items-start gap-1.5 text-sm">

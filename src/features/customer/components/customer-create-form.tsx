@@ -1,5 +1,6 @@
 "use client"
 import {
+    useEffect,
     useState
 } from "react"
 import {
@@ -49,7 +50,7 @@ import {
 import {
     Calendar as CalendarIcon
 } from "lucide-react"
-import { useCreateCustomerMutation } from "../customerApi"
+import { useCreateCustomerMutation, useGetCustomerByNoQuery, useUpdateCustomerByNoMutation } from "../customerApi"
 
 const formSchema = z.object({
     firstName: z.string().min(1),
@@ -59,7 +60,9 @@ const formSchema = z.object({
     dateOfBirth: z.coerce.date()
 });
 
-export default function CustomerCreateForm() {
+export default function CustomerCreateForm({data}:{
+    data: string
+}) {
 
     
     const form = useForm<z.infer<typeof formSchema>>({
@@ -73,17 +76,42 @@ export default function CustomerCreateForm() {
         },
     })
 
-    const [createCustomer,{isLoading}] = useCreateCustomerMutation();
+    const { reset } = form;
+
+    const [ updateCustomerByNo, {isLoading: isUpdating}] = useUpdateCustomerByNoMutation()
+    const [ createCustomer, {isLoading: isCreating} ] = useCreateCustomerMutation()
+    const { data: customer } = useGetCustomerByNoQuery(data)
+    
+    useEffect(() => {
+        if (data !== "new") {
+            console.log("Edit", customer)
+            reset(customer)
+        } else {
+            console.log("Create new")
+        }
+    }, [customer, reset, data])
+
+    // const [createCustomer,{isLoading}] = useCreateCustomerMutation();
 
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            console.log("Form Value: ",values);
-            const response = await createCustomer(values).unwrap()
-            console.log("Response:",response)
+            let response = null;
+            
+            if (data === "new") {
+                response = await createCustomer(values).unwrap()
+            } else {
+                response = await updateCustomerByNo({
+                    customerNo: data,
+                    data: values
+                }).unwrap()
+            }
+            // console.log("Form Value: ",values);
+            // const response = await createCustomer(values).unwrap()
+            // console.log("Response:",response)
             toast(
                 <pre className="mt-2 w-[340px] rounded-md bg-green-950 p-4">
-                    <code className="text-white">Customer created</code>
+                    <code className="text-white">Customer saved</code>
                 </pre>
             );
         } catch (error) {
@@ -227,10 +255,8 @@ export default function CustomerCreateForm() {
                     )}
                 />
 
-                <Button type="submit">
-                    {
-                        isLoading ? "Creating..." : "Create"
-                    }
+                <Button type="submit" disabled={isCreating || isUpdating}>
+                    { isCreating || isUpdating ? "Saving" : "Save"}
                 </Button>
             </form>
         </Form>
